@@ -1,0 +1,136 @@
+-----  MLife version 1.0 Input File  -------------------------------------------
+Test#18
+-----  Job Options  ------------------------------------------------------------
+false		  EchoInp           Echo input to <rootname>.echo as this file is being read.
+true              StrNames          Use channel names following a "$" instead of numbers when specifying channels in this input file.
+false		  OutData           Output modified data array after scaling and calculated channels. (currently unavailable)
+"%6.2e"          RealFmt            Format for outputting floating-point values.
+"Test18"          RootName          Root name for aggregate output files.
+-----  Input-Data Layout  ------------------------------------------------------
+5                 TitleLine         The row with the file title on it (zero if no title is available).
+7                 NamesLine         The row with the channel names on it (zero if no names are available or are specified below).
+8                 UnitsLine         The row with the channel units on it (zero if no units are available or are specified below).
+9                 FirstDataLine     The first row of data.
+10               NumChans         The number of channels in each input file.
+ChanTitle    ChanUnits    Scale  Offset   PSF_Type   NumCols rows of data follow.  Title and units strings must be 10 characters or less.
+"Time"       "(sec)"       1.0    0.0	  0		
+"WindVxi"    "(m/sec)"     1.0    0.0     0
+"WindVyi"    "(m/sec)"     1.0    0.0     0
+"WindVzi"    "(m/sec)"     1.0    0.0     0
+"RootFxc1"   "(kN)"        1.0    0.0     0
+"RootFyc1"   "(kN)"        1.0    0.0     0
+"RootFzc1"   "(kN)"        1.0    0.0     0
+"RootMxc1"   "(kN·m)"      1.0    0.0     0
+"RootMyc1"   "(kN·m)"      1.0    0.0     0
+"RootMzc1"   "(kN·m)"      1.0    0.0     0
+-----  Calculated Channels  ----------------------------------------------------
+0                 NumCChan          The number calculated channels to generate.
+1234567890        Seed              The integer seed for the random number generator (-2,147,483,648 to 2,147,483,647)
+Col_Title   Units    Equation       Put each field in quotes.  Titles and units are limited to 10 characters.  NumCChan rows of data follow.
+-----  Load Roses  -------------------------------------------------------------
+2                 NumRoses          The number of load roses to generate.
+Rose Name       Units    Channel1       Channel2     nSectors
+"RootFxyc1"    "(kN)"   $RootFxc1$     $RootFyc1$      12
+"RootMxyc1"    "(kN·m)"   $RootMxc1$     $RootMyc1$      12
+-----  Time and Wind Speed  ----------------------------------------------------
+$Time$            TimeChan          The channel containing time.
+$WindVxi$         WSChan            The primary wind-speed channel (used for mean wind speed and turbulence intensity, 0 for none)
+-----  Statistics and Extreme Events  ------------------------------------------
+true 		  DoStats           Generate statistics of all the channels.
+true		  WrStatsTxt        Write the stats to a text file?
+false             WrStatsXLS        Write the stats to an Excel file?
+2                 NumSFChans        Number of channels that will have summary statistics generated for them.
+$RootFxyc1_3$ $RootFxyc1_7$             SFChans           List of channels that will have summary statistics generated for them.  Must number NumSFChans.
+-----  Distributions -----------------------------------------------------------
+false             UserDistrib         User defined distribution?  true = load user-specified distribution, false = only use Weibull wind distribution
+2.4               WeibullShape        Weibull shape factor. If WeibullShape=2, enter the mean wind speed for WeibullScale.
+3                 WeibullScale        Weibull scale factor. If WeibullShape<>2.  Otherwise, enter the mean wind speed.
+3                 WSin                Cut-in wind speed for the turbine.
+21                WSout               Cut-out wind speed for the turbine.
+44                WSmax               Maximum  wind speed value for the wind-speed bins.
+1                 WSMaxBinSize        Maximum width of a wind-speed bin.
+0                 nDistribVars        Number of independent variables in the user-specified distribution, ignored if UserDistrib = false
+""                DistribName         Filename of the user-supplied distribution table, ignored if UserDistrib = false
+-----  Fatigue  ----------------------------------------------------------------
+29                nFatigueChannels    The number of fatigue channels.  Next six lines ignored if zero.
+0.0               FiltRatio           The fraction of the maximum range of each channel used as a cutoff range for the racetrack filter.  Use zero for no filter.
+630720000         DesignLife          Number of seconds in the design lifetime  (20 years = 630720000 seconds).
+1                 Availability        Fraction of the design life the turbine is operating when winds are between Vin and Vout
+false		  BinCycles           Bin the rainflow cycles?
+0.5               UCMult              Multiplier for binning unclosed cycles.  (0 discards, 1 counts as a full cycle)
+true              DoShortTerm         Compute simple (unweighted) damage-equivalent loads and damage rates.
+true              DoLife              Do lifetime-related calculations?
+true              DoAggregate         Compute a DELs and a damage result based on an aggregate of all the input files (does not use the wind spped distribution)
+false             WrShortTermTxt      Write short-term results to plain-text files?
+true              WrShortTermXLS      Write short-term resultsto an Excel workbook?
+false             WrLifeTxt           Write lifetime results to plain-text files?
+true              WrLifeXLS           Write lifetime results to an Excel workbook?
+1                 EquivalentFrequency The frequency of the damage equivalent load (Hz)
+false             DEL_AsRange         true = report DELs as a range value,  false = report as a one-sided amplitude
+1                 DEL_Type            1 = fixed mean, 2 = zero mean, 3 = both 
+1                 GoodmanFlag         0 = no Goodman correction, 1 = use Goodman correction, 2 = compute results with and without Goodman correction
+Channel#  NSlopes  SNslopeLst      BinFlag  BinWidth/Number  TypeLMF     LUlt    BinWidth not used when BinCycles is false. nFatigueChannels rows of data follow.  LUlt >> LMF
+$RootFxc1$   1        10            BW	            20.0       AM	  2500
+$RootFyc1$   1        10            BW              20.0        AM        2500
+$RootFxyc1_1$   1        10            BW	            20.0       AM	  2500
+$RootFxyc1_2$   1        10            BW	            20.0       AM	  2500
+$RootFxyc1_3$   1        10            BW	            20.0       AM	  2500
+$RootFxyc1_4$   1        10            BW	            20.0       AM	  2500
+$RootFxyc1_5$   1        10            BW	            20.0       AM	  2500
+$RootFxyc1_6$   1        10            BW	            20.0       AM	  2500
+$RootFxyc1_7$   1        10            BW	            20.0       AM	  2500
+$RootFxyc1_8$   1        10            BW	            20.0       AM	  2500
+$RootFxyc1_9$   1        10            BW	            20.0       AM	  2500
+$RootFxyc1_10$   1        10            BW	            20.0       AM	  2500
+$RootFxyc1_11$   1        10            BW	            20.0       AM	  2500
+$RootFxyc1_12$   1        10            BW	            20.0       AM	  2500
+$RootFzc1$   1        10            BW              40.0       AM        4000
+$RootMxc1$   1        10            BW	            20.0       AM	  31875
+$RootMyc1$   1        10            BW              20.0        AM        31875
+$RootMxyc1_1$   1        10            BW	            20.0       AM	  31875
+$RootMxyc1_2$   1        10            BW	            20.0       AM	  31875
+$RootMxyc1_3$   1        10            BW	            20.0       AM	  31875
+$RootMxyc1_4$   1        10            BW	            20.0       AM	  31875
+$RootMxyc1_5$   1        10            BW	            20.0       AM	  31875
+$RootMxyc1_6$   1        10            BW	            20.0       AM	  31875
+$RootMxyc1_7$   1        10            BW	            20.0       AM	  31875
+$RootMxyc1_8$   1        10            BW	            20.0       AM	  31875
+$RootMxyc1_9$   1        10            BW	            20.0       AM	  31875
+$RootMxyc1_10$   1        10            BW	            20.0       AM	  31875
+$RootMxyc1_11$   1        10            BW	            20.0       AM	  31875
+$RootMxyc1_12$   1        10            BW	            20.0       AM	  31875
+3                 NumDELGroups
+Name        NChannels      ChannelList
+"RootFxyc1"    14          1 3 4 5 6 7 8 2 9 10 11 12 13 14
+"RootMxyc1"   14          16 18 19 20 21 22 23 17 24 25 26 27 28 29
+"RootFzc1"   1          15
+-----  Input Files  ------------------------------------------------------------
+1                 FileFormat         Format of input files.  1 = FAST ascii, 2 = FAST binary
+24  1.1   1.3   1.5   1.7    (Weibull-Weighted Normal Operation: NumNormFiles, PSF1, PSF2, PSF3, PSF4)
+"result_03.out"
+"result_04.out"
+"result_05.out"
+"result_06.out"
+"result_07.out"
+"result_08.out"
+"result_09.out"
+"result_10.out"
+"result_11.out"
+"result_11.4.out"
+"result_12.out"
+"result_13.out"
+"result_14.out"
+"result_15.out"
+"result_16.out"
+"result_17.out"
+"result_18.out"
+"result_19.out"
+"result_20.out"
+"result_21.out"
+"result_22.out"
+"result_23.out"
+"result_24.out"
+"result_25.out"
+0  1.1   1.3   1.5   1.7    (Weibull-Weighted Idling: NumIdleFiles, PSF1, PSF2, PSF3, PSF4)
+0  1.2   1.3   1.4   1.6    (Discrete Events: NumDiscFiles, PSF1, PSF2, PSF3, PSF4)9                NumFiles          The number of input files to read.
+==EOF==                             DO NOT REMOVE OR CHANGE.  MUST COME JUST AFTER LAST LINE OF VALID INPUT.
